@@ -1,59 +1,88 @@
-// Create a "close" button and append it to each list item
-var myNodelist = document.getElementsByTagName("LI");
-var i;
-for (i = 0; i < myNodelist.length; i++) {
-  var span = document.createElement("SPAN");
-  var txt = document.createTextNode("\u00D7");
-  span.className = "close";
-  span.appendChild(txt);
-  myNodelist[i].appendChild(span);
-}
+// used a video help to create javascript part
+// Retrieve todo from local storage or initialize an empty array
+let todo = JSON.parse(localStorage.getItem("todo")) || [];
+const todoInput = document.getElementById("todoInput");
+const todoList = document.getElementById("todoList");
+const todoCount = document.getElementById("todoCount");
+const addButton = document.querySelector(".btn");
+const deleteButton = document.getElementById("deleteButton");
 
-// Click on a close button to hide the current list item
-var close = document.getElementsByClassName("close");
-var i;
-for (i = 0; i < close.length; i++) {
-  close[i].onclick = function () {
-    var div = this.parentElement;
-    div.style.display = "none";
-  };
-}
-
-// Add a "checked" symbol when clicking on a list item
-var list = document.querySelector("ul");
-list.addEventListener(
-  "click",
-  function (ev) {
-    if (ev.target.tagName === "LI") {
-      ev.target.classList.toggle("checked");
+// Initialize
+document.addEventListener("DOMContentLoaded", function () {
+  addButton.addEventListener("click", addTask);
+  todoInput.addEventListener("keydown", function (event) {
+    if (event.key === "Enter") {
+      event.preventDefault(); // Prevents default Enter key behavior
+      addTask();
     }
-  },
-  false
-);
+  });
+  deleteButton.addEventListener("click", deleteAllTasks);
+  displayTasks();
+});
 
-// Create a new list item when clicking on the "Add" button
-function newElement() {
-  var li = document.createElement("li");
-  var inputValue = document.getElementById("myInput").value;
-  var t = document.createTextNode(inputValue);
-  li.appendChild(t);
-  if (inputValue === "") {
-    alert("You must write something!");
-  } else {
-    document.getElementById("myUL").appendChild(li);
+function addTask() {
+  const newTask = todoInput.value.trim();
+  if (newTask !== "") {
+    todo.push({ text: newTask, disabled: false });
+    saveToLocalStorage();
+    todoInput.value = "";
+    displayTasks();
   }
-  document.getElementById("myInput").value = "";
+}
 
-  var span = document.createElement("SPAN");
-  var txt = document.createTextNode("\u00D7");
-  span.className = "close";
-  span.appendChild(txt);
-  li.appendChild(span);
+function displayTasks() {
+  todoList.innerHTML = "";
+  todo.forEach((item, index) => {
+    const p = document.createElement("p");
+    p.innerHTML = `
+        <div class="todo-container">
+          <input type="checkbox" class="todo-checkbox" id="input-${index}" ${
+      item.disabled ? "checked" : ""
+    }>
+          <p id="todo-${index}" class="${
+      item.disabled ? "disabled" : ""
+    }" onclick="editTask(${index})">${item.text}</p>
+        </div>
+      `;
+    p.querySelector(".todo-checkbox").addEventListener("change", () =>
+      toggleTask(index)
+    );
+    todoList.appendChild(p);
+  });
+  todoCount.textContent = todo.length;
+}
 
-  for (i = 0; i < close.length; i++) {
-    close[i].onclick = function () {
-      var div = this.parentElement;
-      div.style.display = "none";
-    };
-  }
+function editTask(index) {
+  const todoItem = document.getElementById(`todo-${index}`);
+  const existingText = todo[index].text;
+  const inputElement = document.createElement("input");
+
+  inputElement.value = existingText;
+  todoItem.replaceWith(inputElement);
+  inputElement.focus();
+
+  inputElement.addEventListener("blur", function () {
+    const updatedText = inputElement.value.trim();
+    if (updatedText) {
+      todo[index].text = updatedText;
+      saveToLocalStorage();
+    }
+    displayTasks();
+  });
+}
+
+function toggleTask(index) {
+  todo[index].disabled = !todo[index].disabled;
+  saveToLocalStorage();
+  displayTasks();
+}
+
+function deleteAllTasks() {
+  todo = [];
+  saveToLocalStorage();
+  displayTasks();
+}
+
+function saveToLocalStorage() {
+  localStorage.setItem("todo", JSON.stringify(todo));
 }
