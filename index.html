@@ -3,25 +3,24 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>TO DO list</title>
+    <title>TO DO LIST</title>
+    <!-- I used https://www.youtube.com/watch?v=G0jO8kUrg-I as an inspiration for this project !-->
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-   <div class="container">
-    <div class="todo-app">
-      <h2>TO DO List <img src="images/icon.png"></h2>
-      <div class="row">
-        <input type="text" id="input-box" placeholder="Add your task">
-        <button>Add</button>
+    <div class="container">
+      <div class="todo-app">
+        <h2>TO DO LIST <img src="images/icon.png" /></h2>
+        <div class="row">
+          <input type="text" id="input-box" placeholder="Add your task" />
+          <button id="add-btn">Add</button>
+        </div>
+        <ul id="list-container"></ul>
+        <button id="mark-all-btn" style="display: none">
+          Mark all as done
+        </button>
+      </div>
     </div>
-    <ul id="list-container">
-      <li>Task 1</li>
-      <li>Task 2</li>
-      <li>Task 3</li>
-    </ul>
-   </div>
+    <script src="script.js"></script>
   </body>
 </html>
-
-
-https://www.youtube.com/watch?v=G0jO8kUrg-I

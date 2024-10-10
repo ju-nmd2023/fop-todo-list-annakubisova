@@ -1,12 +1,12 @@
 * {
   margin: 0;
   padding: 0;
-  font-family: Georgia, 'Times New Roman', Times, serif; /*change it to Poppins*/
+  font-family: "Georgia", serif;
   box-sizing: border-box;
 }
 
 .container {
-  width: 50;
+  width: 100%;
   min-height: 100vh;
   background: linear-gradient(135deg, #153677, #4e085f);
   padding: 10px;
@@ -39,7 +39,7 @@
   justify-content: space-between;
   background: #edeef0;
   border-radius: 30px;
-  padding-left: 20px;
+  padding-left: 10px;
   margin-bottom: 25px;
 }
 
@@ -54,12 +54,13 @@ input {
 button {
   border: none;
   outline: none;
-  padding: 16px 50px;
+  padding: 16px 30px;
   background: #ff5945;
   color: #fff;
   font-size: 16px;
   cursor: pointer;
   border-radius: 40px;
+  opacity: 1;
 }
 
 ul li {
@@ -69,16 +70,39 @@ ul li {
   user-select: none;
   cursor: pointer;
   position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+ul li span.completed {
+  text-decoration: line-through;
+  opacity: 0.7;
+}
+
+ul li button {
+  text-decoration: none; /* Ensures that the delete button doesn't get crossed out */
 }
 
 ul li::before {
-  content: '';
-  position: absolute;
-  height: 28px;
-  width: 28px;
+  content: "";
+  height: 20px;
+  width: 20px;
   border-radius: 50%;
   background-image: url(images/unchecked.png);
   background-size: cover;
   background-position: center;
-  top: 12px;
+  margin-right: 10px; /* Adds space between the circle and text */
+  flex-shrink: 0; /* Prevents the icon from shrinking */
+  align-self: center; /* Centers the icon within the flex container */
+  position: absolute;
+  left: 10px;
+}
+
+ul li.completed::before {
+  background-image: url(images/checked.png);
+}
+
+#mark-all-btn {
+  display: none;
 }
