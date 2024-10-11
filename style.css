@@ -63,6 +63,13 @@ button {
   opacity: 1;
 }
 
+.delete-btn {
+  background: none;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+}
+
 ul li {
   list-style: none;
   font-size: 17px;
