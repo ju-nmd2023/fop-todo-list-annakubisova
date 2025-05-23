@@ -4,23 +4,29 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>TO DO list</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css" />
   </head>
   <body>
     <div class="container">
       <div class="todo-app">
         <h1>Tasks for the day 📝</h1>
         <form id="task-form" class="input-container">
-          <input type="text" id="task-input" placeholder="What needs to be done?" required />
-          <button type="submit" id="add-button">Add tasks</button>
+          <input
+            type="text"
+            id="task-input"
+            placeholder="What needs to be done?"
+            required
+          />
+          <button type="submit" id="add-button" disabled>Add tasks</button>
+          <button type="button" id="clear-button" disabled>Clear tasks</button>
         </form>
 
         <ul id="task-list"></ul>
 
         <button id="mark-all">You're done for the day!</button>
       </div>
-      </div>
+    </div>
 
-      <script src="script.js"></script>
+    <script src="script.js"></script>
   </body>
 </html>
